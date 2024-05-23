@@ -291,7 +291,7 @@ class TestNestedModule(TestAirtable):
 
 
 # This line is here only to check that Python code supports having the Record used.
-_UnusedType = airtable.Record[Dict[str, Any]]
+#_UnusedType = airtable.Record[Dict[str, Any]]
 
 
 if __name__ == '__main__':
