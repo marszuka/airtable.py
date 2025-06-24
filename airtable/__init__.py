@@ -35,8 +35,11 @@ def check_string(string):
     return True
 
 
-def create_payload(data):
-    return {'fields': data}
+def create_payload(data, typecast=False):
+    return {
+        'fields': data,
+        'typecast': typecast
+    }
 
 
 _T = TypeVar('_T', bound=Mapping[str, Any])
@@ -170,15 +173,15 @@ class Airtable(object):
             else:
                 break
 
-    def create(self, table_name, data):
+    def create(self, table_name, data, typecast=False):
         assert check_string(table_name)
-        payload = create_payload(data)
+        payload = create_payload(data, typecast)
         return self.__request('POST', table_name, payload=json.dumps(payload))
 
-    def update(self, table_name, record_id, data):
+    def update(self, table_name, record_id, data, typecast=False):
         assert check_string(table_name) and check_string(record_id)
         url = posixpath.join(table_name, record_id)
-        payload = create_payload(data)
+        payload = create_payload(data, typecast)
         return self.__request('PATCH', url, payload=json.dumps(payload))
 
     def update_all(self, table_name, record_id, data):
